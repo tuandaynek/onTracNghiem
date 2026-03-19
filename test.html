@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Lịch Sử - THPT Long Khánh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .tab-active { border-bottom: 4px solid #2563eb; color: #2563eb; background: #f8fafc; }
+        .option-btn { transition: all 0.2s; border: 2px solid #e2e8f0; text-align: left; width: 100%; padding: 1rem; border-radius: 0.75rem; font-weight: 500; background: white; }
+        .option-btn:hover:not(:disabled) { border-color: #3b82f6; background-color: #f8fafc; }
+        .correct { border-color: #10b981 !important; background-color: #ecfdf5 !important; color: #065f46 !important; position: relative; }
+        .correct::after { content: '✓'; position: absolute; right: 1rem; }
+        .wrong { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #991b1b !important; position: relative; }
+        .wrong::after { content: '✗'; position: absolute; right: 1rem; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-slate-900 uppercase tracking-tight">Ôn Tập Lịch Sử</h1>
+            <p class="text-slate-500 mt-2 font-medium">Tài liệu Giữ kì 2 - THPT Long Khánh</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="flex overflow-x-auto bg-white shadow-sm rounded-xl mb-6 border border-slate-200 no-scrollbar p-1">
+            <button onclick="changeCategory(1)" class="tab-btn flex-1 px-4 py-3 font-bold whitespace-nowrap rounded-lg transition" id="btn-cat-1">1. VN Bắc Thuộc & Phong Kiến</button>
+            <button onclick="changeCategory(2)" class="tab-btn flex-1 px-4 py-3 font-bold whitespace-nowrap rounded-lg transition" id="btn-cat-2">2. Kháng Chiến Bảo Vệ Tổ Quốc</button>
+            <button onclick="changeCategory(3)" class="tab-btn flex-1 px-4 py-3 font-bold whitespace-nowrap rounded-lg transition" id="btn-cat-3">3. Cải cách Hồ Quý Ly</button>
+            <button onclick="changeCategory(4)" class="tab-btn flex-1 px-4 py-3 font-bold whitespace-nowrap rounded-lg transition" id="btn-cat-4">4. Lịch sử Đông Nam Á</button>
+        </div>
+
+        <!-- Main Quiz Area -->
+        <div class="bg-white p-6 md:p-10 rounded-2xl shadow-md border border-slate-200 min-h-[450px] flex flex-col">
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-100 h-2 rounded-full mb-6">
+                <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div id="quiz-content" class="flex-1">
+                <div id="question-header" class="mb-2">
+                    <span id="q-counter" class="text-blue-600 font-bold text-sm uppercase tracking-wider">Câu 1</span>
+                </div>
+                <h2 id="q-text" class="text-xl font-bold text-slate-800 mb-8 leading-relaxed">Đang tải câu hỏi...</h2>
+                
+                <div id="options-grid" class="space-y-3">
+                    <!-- Options will be injected here -->
+                </div>
+            </div>
+
+            <!-- Result Overlay -->
+            <div id="result-screen" class="hidden text-center py-10">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800">Hoàn thành mục này!</h3>
+                <p class="text-slate-500 mt-2">Bạn đã ôn tập xong tất cả câu hỏi trong phần này.</p>
+                <button onclick="resetCategory()" class="mt-8 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">Làm lại</button>
+            </div>
+
+            <!-- Footer Action -->
+            <div id="quiz-footer" class="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div id="feedback-text" class="font-bold text-lg"></div>
+                <button id="next-btn" onclick="nextQuestion()" class="hidden w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
+                    Câu tiếp theo &rarr;
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            // PHẦN 1: LỊCH SỬ VIỆT NAM (THỜI KỲ BẮC THUỘC & PHONG KIẾN)
+            { cat: 1, q: "Sau khi lên làm vua, Lí Bí đặt quốc hiệu nước ta là:", options: ["Đại Việt", "Nam Việt", "Vạn Xuân", "Đại Cồ Việt"], a: 2 },
+            { cat: 1, q: "Chiến thắng nào sau đây đã chấm dứt hoàn toàn thời kì một nghìn năm đô hộ của phong kiến phương Bắc đối với nước ta?", options: ["Chiến thắng tại phòng tuyến sông Như Nguyệt", "Chiến thắng trên sông Bạch Đằng (năm 938)", "Chiến thắng Chi Lăng - Xương Giang", "Chiến thắng Ngọc Hồi - Đống Đa"], a: 1 },
+            { cat: 1, q: "Ai là người lãnh đạo thành công cuộc khởi nghĩa đánh đuổi quân xâm lược nhà Đường năm 722 và được nhân dân suy tôn là “Bố cái đại vương”?", options: ["Mai Thúc Loan", "Phùng Hưng", "Bà Triệu", "Dương Đình Nghệ"], a: 0 },
+            { cat: 1, q: "Các cuộc khởi nghĩa trong thời kỳ Bắc thuộc diễn ra đã:", options: ["Thể hiện ý thức xây dựng nền kinh tế tự chủ", "Hình thành khối liên minh công - nông", "Góp phần truyền bá tư tưởng yêu nước mới", "Thể hiện tinh thần yêu nước"], a: 3 },
+            { cat: 1, q: "Khởi nghĩa Lam Sơn (1418 - 1427) nổ ra trong bối cảnh nào?", options: ["Nhà Hồ tiến hành cải cách đất nước thành công", "Nhà Trần khủng hoảng, suy yếu trầm trọng", "Nhà Minh thi hành chính sách cai trị hà khắc", "Nhà Minh đang lâm vào khủng hoảng, suy yếu"], a: 2 },
+            { cat: 1, q: "Sau khi đánh đổ chính quyền chúa Nguyễn, nhiệm vụ đặt ra cho phong trào Tây Sơn là gì?", options: ["Tiến quân ra Bắc, phối hợp với vua Lê đánh đổ chúa Trịnh", "Tiến quân ra Bắc tiêu diệt 29 vạn quân Thanh", "Tiến ra Bắc đánh đổ chính quyền Lê - Trịnh, thống nhất đất nước", "Tiến ra Bắc phối hợp với chúa Trịnh, lật đổ vua Lê"], a: 2 },
+            { cat: 1, q: "Một trong những điểm độc đáo của cuộc khởi nghĩa Hai Bà Trưng (40 - 43) là:", options: ["Khởi nghĩa khi chính quyền Đông Hán suy yếu", "Thu hút đông đảo nhân dân tham gia", "Lực lượng thủy binh giữ vai trò tiên phong", "Nhiều nữ tướng tham gia chỉ huy cuộc khởi nghĩa"], a: 3 },
+            { cat: 1, q: "Nội dung nào dưới đây phản ánh đúng ý nghĩa của phong trào Tây Sơn (1771 - 1789)?", options: ["Mở ra thời kì phát triển mới của đất nước", "Phát triển thành chiến tranh giải phóng dân tộc", "Đập tan âm mưu thủ tiêu nền văn hoá Đại Việt", "Đánh tan các thế lực ngoại xâm hùng mạnh"], a: 1 },
+            { cat: 1, q: "Nội dung nào dưới đây không phản ánh đúng ý nghĩa của khởi nghĩa Lam Sơn (1418-1427)?", options: ["Mở ra thời kì phát triển mới của đất nước", "Phát triển thành chiến tranh giải phóng dân tộc", "Đập tan âm mưu thủ tiêu nền văn hoá Đại Việt", "Đánh tan các thế lực ngoại xâm hùng mạnh"], a: 2 },
+            { cat: 1, q: "Cuộc khởi nghĩa tiêu biểu nào thời Bắc thuộc đấu tranh chống nhà Đông Hán?", options: ["Khởi nghĩa Hai Bà Trưng", "Khởi nghĩa Bà Triệu", "Khởi nghĩa Lý Bí", "Khởi nghĩa Phùng Hưng"], a: 0 },
+            { cat: 1, q: "Ý nào dưới đây phản ánh không đúng nguyên nhân thắng lợi của phong trào Tây Sơn?", options: ["Thế lực của chúa Nguyễn còn mạnh", "Vai trò của ba anh em nhà Tây Sơn", "Truyền thống yêu nước của dân tộc", "Sức mạnh của khối đại đoàn kết toàn dân"], a: 0 },
+            { cat: 1, q: "Thắng lợi quân sự nào sau đây của khởi nghĩa Lam Sơn đã buộc quân Minh phải chấp nhận thất bại, rút quân về nước?", options: ["Ngọc Hồi – Đống Đa", "Tốt Động - Chúc Động", "Rạch Gầm – Xoài Mút", "Chi Lăng - Xương Giang"], a: 3 },
+            { cat: 1, q: "Trong cuộc kháng chiến chống quân Xiêm (1785), nghĩa quân Tây Sơn đã giành được thắng lợi nào?", options: ["Chiến thắng Rạch Gầm-Xoài Mút", "Chiến thắng Ngọc Hồi-Đống Đa", "Chiến thắng trên sông Như Nguyệt", "Chiến thắng Tây Kết, Hàm Tử"], a: 0 },
+
+            // PHẦN 2: CÁC CUỘC KHÁNG CHIẾN BẢO VỆ TỔ QUỐC
+            { cat: 2, q: "Chiến tranh bảo vệ Tổ quốc có vai trò quan trọng:", options: ["Trong việc hình thành và nâng cao lòng tự hào dân tộc", "Trong việc hình thành và phát triển truyền thống yêu nước", "Đối với sự sinh tồn và phát triển của quốc gia, dân tộc", "Khơi dậy và củng cố tinh thần đoàn kết"], a: 2 },
+            { cat: 2, q: "Trận quyết chiến chiến lược trong cuộc kháng chiến chống quân xâm lược Nam Hán năm 938 diễn ra tại:", options: ["Sông Bạch Đằng", "Sông Như Nguyệt", "Bến Đông Bộ Đầu", "Cửa ải Hàm Tử"], a: 0 },
+            { cat: 2, q: "Trận quyết chiến chiến lược trong cuộc kháng chiến chống quân xâm lược Tống thời Lý diễn ra tại:", options: ["Sông Bạch Đằng", "Sông Như Nguyệt", "Đồn Ngọc Hồi - Đống Đa", "Bến Đông Bộ Đầu"], a: 1 },
+            { cat: 2, q: "Trận quyết chiến chiến lược trong cuộc kháng chiến chống quân xâm lược Thanh năm 1789 diễn ra tại:", options: ["Sông Bạch Đằng", "Sông Như Nguyệt", "Đồn Ngọc Hồi - Đống Đa", "Cửa ải Chi Lăng"], a: 2 },
+            { cat: 2, q: "Lãnh đạo cuộc kháng chiến chống quân Nam Hán xâm lược năm 938 là:", options: ["Ngô Quyền", "Trần Hưng Đạo", "Lê Lợi", "Quang Trung - Nguyễn Huệ"], a: 0 },
+            { cat: 2, q: "Lãnh đạo cuộc kháng chiến chống quân xâm lược Xiêm và Thanh cuối thế kỷ XVIII là:", options: ["Ngô Quyền", "Trần Hưng Đạo", "Lê Lợi", "Nguyễn Huệ - Quang Trung"], a: 3 },
+            { cat: 2, q: "Cuộc khởi nghĩa nào của quân dân Việt Nam có đặc điểm độc đáo: bắt đầu và kết thúc là một hội thề lịch sử?", options: ["Khởi nghĩa Mai Thúc Loan", "Khởi nghĩa Hai Bà Trưng", "Khởi nghĩa Lam Sơn", "Khởi nghĩa Bà Triệu"], a: 2 },
+            { cat: 2, q: "Dòng sông nào sau đây ba lần ghi danh quân dân Việt Nam chiến thắng quân xâm lược?", options: ["Sông Đà", "Sông Bạch Đằng", "Sông Hồng", "Sông Mê-kông"], a: 1 },
+            { cat: 2, q: "Lãnh đạo cuộc kháng chiến chống quân Tống xâm lược năm 981 là:", options: ["Lý Thường Kiệt", "Lê Hoàn", "Ngô Quyền", "Trần Quốc Tuấn"], a: 1 },
+            { cat: 2, q: "Năm 1258, trong cuộc kháng chiến chống quân Mông Cổ xâm lược, quân dân nhà Trần thắng lợi tại:", options: ["Đông Bộ Đầu", "Sông Bạch Đằng", "Chi Lăng - Xương Giang", "Sông Như Nguyệt"], a: 0 },
+            { cat: 2, q: "Câu nói về 'Tiền Ngô Vương đánh tan trăm vạn quân Lưu Hoằng Tháo' nhắc đến ý nghĩa lịch sử của cuộc kháng chiến nào?", options: ["Kháng chiến chống Thanh 1789", "Kháng chiến chống Nguyên 1258", "Kháng chiến chống Xiêm 1785", "Kháng chiến chống Nam Hán 938"], a: 3 },
+
+            // PHẦN 3: CẢI CÁCH CỦA HỒ QUÝ LY VÀ TRIỀU HỒ
+            { cat: 3, q: "Biện pháp mà Hồ Quý Ly chuẩn bị để đối phó với nhà Minh là:", options: ["Cải cách văn hoá, xã hội, giáo dục", "Xây dựng toà thành Tây Đô kiên cố", "Buộc vua Trần nhường ngôi cho mình", "Ban hành chính sách hạn điền, hạn nô"], a: 1 },
+            { cat: 3, q: "Một trong những chính sách của Hồ Quý Ly sau khi lên ngôi năm 1400 là:", options: ["Tổ chức kháng chiến chống quân Xiêm", "Tạo ra cục diện chiến tranh Nam-Bắc triều", "Mở rộng lãnh thổ Đại Việt về phía Nam", "Đã thực hiện nhiều chính sách cải cách"], a: 3 },
+            { cat: 3, q: "Lĩnh vực nào sau đây không có trong các chính sách cải cách của Hồ Quý Ly?", options: ["Văn hoá - giáo dục", "Chính trị - quân sự", "Kinh tế - xã hội", "Thể thao - du lịch"], a: 3 },
+            { cat: 3, q: "Cuộc cải cách của Hồ Quý Ly diễn ra trong hoàn cảnh:", options: ["Đại Việt lâm vào khủng hoảng trầm trọng", "Nhà Trần đang giai đoạn thịnh đạt", "Giặc Tống sang xâm lược lần thứ nhất", "Chế độ phong kiến Việt Nam phát triển nhanh"], a: 0 },
+            { cat: 3, q: "Mục đích chính trong việc xây dựng thành Tây Đô của Hồ Quý Ly là:", options: ["Tăng cường phòng thủ đất nước", "Chuẩn bị để tiến đánh Chăm-pa", "Tích trữ lương thảo cho nhân dân", "Chuẩn bị tấn công vào nhà Minh"], a: 0 },
+            { cat: 3, q: "Nguyên nhân chủ yếu dẫn tới tình trạng mất mùa, đói kém thời Trần nửa sau thế kỷ XIV?", options: ["Chính sách quân điền bộc lộ hạn chế", "Triều đình không quan tâm đến sản xuất", "Chiến tranh với nhà Minh và Chăm-pa", "Nông dân không quan tâm đến sản xuất"], a: 1 },
+            { cat: 3, q: "Bài học quan trọng nhất từ thất bại của Hồ Quý Ly trong bảo vệ Tổ quốc hiện nay?", options: ["Tập hợp sức mạnh đoàn kết toàn dân tộc", "Xây dựng quân đội thường trực hùng mạnh", "Xây dựng nhiều công trình phòng thủ", "Đoàn kết với các nước láng giềng"], a: 0 },
+            { cat: 3, q: "Về kinh tế - xã hội, để hạn chế điền trang thái ấp của quý tộc, Hồ Quý Ly đã:", options: ["Phát hành tiền giấy", "Ban hành chính sách hạn điền", "Cải cách giáo dục", "Thống nhất đo lường"], a: 1 },
+            { cat: 3, q: "Thành Nhà Hồ là công trình kiến trúc bằng đá độc đáo được UNESCO ghi danh tại đâu?", options: ["Thanh Hóa", "Nghệ An", "Huế", "Ninh Bình"], a: 0 },
+            { cat: 3, q: "Để khuyến khích và đề cao chữ Nôm, Hồ Quý Ly đã:", options: ["Dịch nhiều sách chữ Hán sang chữ Nôm", "Đưa văn thơ Nôm vào thi cử", "Bắt buộc dùng chữ Nôm", "Mở trường dạy chữ Nôm"], a: 0 },
+
+            // PHẦN 4: LỊCH SỬ ĐÔNG NAM Á
+            { cat: 4, q: "Phong trào đấu tranh chống thực dân bùng nổ sớm ở những quốc gia ĐNA nào?", options: ["In-đô-nê-xi-a và Miến Điện", "In-đô-nê-xi-a và Phi-líp-pin", "Việt Nam và Lào", "Mã Lai và Phi-líp-pin"], a: 1 },
+            { cat: 4, q: "Từ nửa sau thế kỷ XIX, các nước Đông Dương trở thành thuộc địa của?", options: ["Anh", "Pháp", "Hà Lan", "Tây Ban Nha"], a: 1 },
+            { cat: 4, q: "Cuối thế kỷ XIX, phong trào đấu tranh ở ĐNA chuyển dịch sang xu hướng nào?", options: ["Vô sản", "Tư sản", "Li khai", "Cực đoan"], a: 1 },
+            { cat: 4, q: "Năm 1945, những quốc gia nào ở Đông Nam Á tuyên bố độc lập sớm nhất?", options: ["In-đô-nê-xi-a, Việt Nam, Lào", "In-đô-nê-xi-a, Việt Nam, Cam-pu-chia", "In-đô-nê-xi-a, Việt Nam, Phi-líp-pin", "In-đô-nê-xi-a, Việt Nam, Ma-lai-xi-a"], a: 0 },
+            { cat: 4, q: "Biến đổi đầu tiên quan trọng nhất của các nước ĐNA sau Thế chiến II là gì?", options: ["Trở thành khu vực được quốc tế coi trọng", "Thành lập tổ chức ASEAN", "Kinh tế phát triển thần kỳ", "Trở thành các quốc gia độc lập, tự chủ"], a: 3 }
+        ];
+
+        let currentCategory = 1;
+        let currentIndex = 0;
+        let filteredQuestions = [];
+
+        function changeCategory(catId) {
+            currentCategory = catId;
+            currentIndex = 0;
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active'));
+            document.getElementById(`btn-cat-${catId}`).classList.add('tab-active');
+            
+            filteredQuestions = allQuestions.filter(q => q.cat === catId);
+            
+            document.getElementById('quiz-content').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-footer').classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentIndex >= filteredQuestions.length) {
+                showResult();
+                return;
+            }
+
+            const q = filteredQuestions[currentIndex];
+            const progress = (currentIndex / filteredQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            document.getElementById('q-counter').innerText = `Câu ${currentIndex + 1} / ${filteredQuestions.length}`;
+            document.getElementById('q-text').innerText = q.q;
+            
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+                btn.onclick = () => selectOption(btn, idx, q.a);
+                grid.appendChild(btn);
+            });
+
+            document.getElementById('next-btn').classList.add('hidden');
+            document.getElementById('feedback-text').innerText = '';
+        }
+
+        function selectOption(btn, selectedIdx, correctIdx) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIdx) {
+                btn.classList.add('correct');
+                document.getElementById('feedback-text').innerText = 'Chính xác! ✨';
+                document.getElementById('feedback-text').className = 'font-bold text-lg text-green-600';
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correctIdx].classList.add('correct');
+                document.getElementById('feedback-text').innerText = 'Chưa đúng rồi!';
+                document.getElementById('feedback-text').className = 'font-bold text-lg text-red-600';
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            loadQuestion();
+        }
+
+        function showResult() {
+            document.getElementById('progress-bar').style.width = `100%`;
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-footer').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+        }
+
+        function resetCategory() {
+            changeCategory(currentCategory);
+        }
+
+        window.onload = () => changeCategory(1);
+    </script>
+</body>
+</html>
