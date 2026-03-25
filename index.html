@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study with LeeMinggTuoonn</title>
+    <title>Ôn Tập Tin Học 11 - Full Đề Cương</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
@@ -15,20 +15,18 @@
         .correct::after { content: '✓ Đúng'; position: absolute; right: 1rem; font-size: 0.8rem; font-weight: bold; }
         .wrong { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #991b1b !important; position: relative; }
         .wrong::after { content: '✗ Sai'; position: absolute; right: 1rem; font-size: 0.8rem; font-weight: bold; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .passage-box { background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1.5rem; font-style: italic; color: #475569; line-height: 1.6; }
+        .passage-box { background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 1rem; margin-bottom: 1.5rem; font-family: 'Consolas', monospace; color: #1e293b; line-height: 1.5; white-space: pre-wrap; font-size: 0.95rem; }
+        .category-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; background: #dbeafe; color: #1e40af; margin-bottom: 8px; display: inline-block; font-weight: 700; text-transform: uppercase; }
     </style>
 </head>
 <body class="min-h-screen pb-12">
 
     <div class="max-w-3xl mx-auto px-4 py-8">
-        <!-- Header -->
         <header class="text-center mb-8">
-            <h1 class="text-3xl font-extrabold text-slate-900 uppercase tracking-tight">Ôn Tập Lịch Sử</h1>
-            <p class="text-slate-500 mt-2 font-medium">Tài liệu ôn thi Giữ kì 2 - THPT Long Khánh</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 uppercase tracking-tight">Ôn Tập Tin Học 11</h1>
+            <p class="text-slate-500 mt-2 font-medium">Toàn bộ câu hỏi ôn thi Giữa HK2 (2024-2025)</p>
         </header>
 
-        <!-- Tab Navigation -->
         <div class="flex bg-white shadow-sm rounded-xl mb-6 border border-slate-200 p-1">
             <button onclick="switchMode('abcd')" id="tab-abcd" class="flex-1 py-3 font-bold rounded-lg transition tab-active">
                 Trắc nghiệm ABCD
@@ -38,199 +36,253 @@
             </button>
         </div>
 
-        <!-- Main Quiz Area -->
-        <div class="bg-white p-6 md:p-10 rounded-2xl shadow-md border border-slate-200 min-h-[550px] flex flex-col">
-            <!-- Progress Bar -->
+        <div class="bg-white p-6 md:p-10 rounded-2xl shadow-md border border-slate-200 min-h-[600px] flex flex-col">
             <div class="w-full bg-slate-100 h-2 rounded-full mb-6">
                 <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
 
             <div id="quiz-content" class="flex-1">
-                <div id="question-header" class="mb-2 flex justify-between items-center">
-                    <span id="q-counter" class="text-blue-600 font-bold text-sm uppercase tracking-wider">Câu 1</span>
+                <div id="question-header" class="mb-2 flex justify-between items-start">
+                    <div>
+                        <div id="q-category" class="category-tag">BÀI 17</div>
+                        <div id="q-counter" class="text-blue-600 font-bold text-sm uppercase tracking-wider block">Câu 1</div>
+                    </div>
                 </div>
                 
-                <!-- Passage for True/False -->
                 <div id="passage-container" class="hidden">
                     <div class="passage-box" id="passage-text"></div>
                 </div>
 
-                <h2 id="q-text" class="text-xl font-bold text-slate-800 mb-6 leading-relaxed">Đang tải...</h2>
+                <h2 id="q-text" class="text-xl font-bold text-slate-800 mb-6 leading-relaxed">Đang tải câu hỏi...</h2>
                 
-                <div id="options-grid" class="space-y-3">
-                    <!-- Options injected here -->
-                </div>
+                <div id="options-grid" class="space-y-3"></div>
             </div>
 
-            <!-- Result Overlay -->
             <div id="result-screen" class="hidden text-center py-10">
-                <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-slate-800">Hoàn thành!</h3>
-                <p class="text-slate-500 mt-2">Bạn đã hoàn tất phần ôn tập này.</p>
-                <button onclick="restartQuiz()" class="mt-8 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">Làm lại</button>
+                <h3 class="text-2xl font-bold text-slate-800">Hoàn thành phần này!</h3>
+                <p class="text-slate-500 mt-2">Bạn đã duyệt qua tất cả câu hỏi. Hãy chuyển sang chế độ khác để ôn tập tiếp.</p>
+                <button onclick="restartQuiz()" class="mt-8 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">Làm lại phần này</button>
             </div>
 
-            <!-- Footer Action -->
             <div id="quiz-footer" class="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div id="feedback-text" class="font-bold text-lg"></div>
-                <button id="next-btn" onclick="nextQuestion()" class="hidden w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
-                    Tiếp theo &rarr;
-                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="hidden w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-md">Tiếp theo &rarr;</button>
             </div>
         </div>
     </div>
 
     <script>
         const abcdQuestions = [
-            { q: "Sau khi lên làm vua, Lí Bí đặt quốc hiệu nước ta là:", options: ["Đại Việt", "Nam Việt", "Vạn Xuân", "Đại Cồ Việt"], a: 2 },
-            { q: "Chiến thắng nào đã chấm dứt hoàn toàn thời kì một nghìn năm đô hộ của phương Bắc?", options: ["Sông Như Nguyệt", "Sông Bạch Đằng (938)", "Chi Lăng - Xương Giang", "Ngọc Hồi - Đống Đa"], a: 1 },
-            { q: "Ai lãnh đạo khởi nghĩa đánh đuổi quân nhà Đường năm 722 và được tôn là “Bố cái đại vương”?", options: ["Mai Thúc Loan", "Phùng Hưng", "Bà Triệu", "Dương Đình Nghệ"], a: 0 },
-            { q: "Các cuộc khởi nghĩa trong thời kỳ Bắc thuộc thể hiện điều gì?", options: ["Xây dựng kinh tế tự chủ", "Liên minh công - nông", "Truyền bá tư tưởng mới", "Tinh thần yêu nước"], a: 3 },
-            { q: "Khởi nghĩa Lam Sơn (1418 - 1427) nổ ra trong bối cảnh nào?", options: ["Nhà Hồ cải cách thành công", "Nhà Trần khủng hoảng", "Nhà Minh cai trị hà khắc", "Nhà Minh suy yếu"], a: 2 },
-            { q: "Nhiệm vụ của phong trào Tây Sơn sau khi đánh đổ chúa Nguyễn là gì?", options: ["Phối hợp vua Lê đánh chúa Trịnh", "Tiêu diệt 29 vạn quân Thanh", "Đánh đổ chính quyền Lê - Trịnh, thống nhất đất nước", "Phối hợp chúa Trịnh"], a: 2 },
-            { q: "Điểm độc đáo của cuộc khởi nghĩa Hai Bà Trưng là:", options: ["Hán suy yếu", "Dân tham gia đông", "Thủy binh tiên phong", "Nhiều nữ tướng chỉ huy"], a: 3 },
-            { q: "Ý nghĩa của phong trào Tây Sơn (1771 - 1789) là gì?", options: ["Mở ra thời kì phát triển mới", "Phát triển thành chiến tranh giải phóng dân tộc", "Đập tan âm mưu thủ tiêu văn hóa", "Đánh tan các thế lực ngoại xâm"], a: 1 },
-            { q: "Nội dung nào KHÔNG đúng về ý nghĩa khởi nghĩa Lam Sơn?", options: ["Mở ra thời kì phát triển", "Chiến tranh giải phóng dân tộc", "Đập tan âm mưu thủ tiêu văn hóa", "Đánh tan các thế lực ngoại xâm hùng mạnh"], a: 2 },
-            { q: "Khởi nghĩa tiêu biểu thời Bắc thuộc chống nhà Đông Hán là:", options: ["Hai Bà Trưng", "Bà Triệu", "Lý Bí", "Phùng Hưng"], a: 0 },
-            { q: "Nguyên nhân nào KHÔNG đúng về thắng lợi của Tây Sơn?", options: ["Thế lực chúa Nguyễn còn mạnh", "Vai trò anh em Tây Sơn", "Truyền thống yêu nước", "Sức mạnh đại đoàn kết"], a: 0 },
-            { q: "Thắng lợi nào buộc quân Minh phải chấp nhận thất bại, rút quân về nước?", options: ["Ngọc Hồi", "Tốt Động", "Rạch Gầm", "Chi Lăng - Xương Giang"], a: 3 },
-            { q: "Nghĩa quân Tây Sơn thắng quân Xiêm (1785) ở đâu?", options: ["Rạch Gầm-Xoài Mút", "Ngọc Hồi-Đống Đa", "Sông Như Nguyệt", "Tây Kết, Hàm Tử"], a: 0 },
-            { q: "Chiến tranh bảo vệ Tổ quốc có vai trò quan trọng đối với:", options: ["Lòng tự hào dân tộc", "Truyền thống yêu nước", "Sự sinh tồn và phát triển dân tộc", "Tinh thần đoàn kết"], a: 2 },
-            { q: "Trận quyết chiến chống Nam Hán năm 938 diễn ra tại:", options: ["Sông Bạch Đằng", "Sông Như Nguyệt", "Bến Đông Bộ Đầu", "Hàm Tử"], a: 0 },
-            { q: "Trận quyết chiến chống Tống thời Lý diễn ra tại:", options: ["Sông Bạch Đằng", "Sông Như Nguyệt", "Ngọc Hồi", "Đông Bộ Đầu"], a: 1 },
-            { q: "Trận quyết chiến chống Thanh năm 1789 diễn ra tại:", options: ["Bạch Đằng", "Như Nguyệt", "Ngọc Hồi - Đống Đa", "Chi Lăng"], a: 2 },
-            { q: "Lãnh đạo cuộc kháng chiến chống Nam Hán năm 938 là:", options: ["Ngô Quyền", "Trần Hưng Đạo", "Lê Lợi", "Quang Trung"], a: 0 },
-            { q: "Lãnh đạo kháng chiến chống Xiêm và Thanh cuối thế kỷ XVIII là:", options: ["Ngô Quyền", "Trần Hưng Đạo", "Lê Lợi", "Nguyễn Huệ"], a: 3 },
-            { q: "Khởi nghĩa nào bắt đầu và kết thúc bằng một hội thề lịch sử?", options: ["Mai Thúc Loan", "Hai Bà Trưng", "Lam Sơn", "Bà Triệu"], a: 2 },
-            { q: "Dòng sông 3 lần đánh thắng quân xâm lược là:", options: ["Sông Đà", "Sông Bạch Đằng", "Sông Hồng", "Sông Mê-kông"], a: 1 },
-            { q: "Lãnh đạo chống quân Tống năm 981 là:", options: ["Lý Thường Kiệt", "Lê Hoàn", "Ngô Quyền", "Trần Quốc Tuấn"], a: 1 },
-            { q: "Năm 1258, quân dân nhà Trần thắng quân Mông Cổ tại:", options: ["Đông Bộ Đầu", "Bạch Đằng", "Chi Lăng", "Như Nguyệt"], a: 0 },
-            { q: "Ý nghĩa 'đánh tan trăm vạn quân Lưu Hoằng Tháo' nói về cuộc kháng chiến nào?", options: ["Chống Thanh", "Chống Nguyên", "Chống Xiêm", "Chống Nam Hán 938"], a: 3 },
-            { q: "Hồ Quý Ly xây dựng thành Tây Đô kiên cố để:", options: ["Cải cách văn hóa", "Đối phó nhà Minh", "Buộc vua Trần nhường ngôi", "Hạn điền"], a: 1 },
-            { q: "Lĩnh vực nào KHÔNG có trong cải cách của Hồ Quý Ly?", options: ["Văn hoá", "Chính trị", "Kinh tế", "Thể thao - du lịch"], a: 3 },
-            { q: "Mục đích chính của thành Tây Đô là:", options: ["Phòng thủ đất nước", "Đánh Chăm-pa", "Tích lương", "Tấn công Minh"], a: 0 },
-            { q: "Bài học quan trọng nhất từ thất bại của nhà Hồ?", options: ["Đoàn kết toàn dân", "Quân đội hùng mạnh", "Xây thành phòng thủ", "Đoàn kết láng giềng"], a: 0 },
-            { q: "Để hạn chế điền trang quý tộc, Hồ Quý Ly ban hành chính sách:", options: ["Tiền giấy", "Hạn điền", "Giáo dục", "Đo lường"], a: 1 },
-            { q: "Thành Nhà Hồ được UNESCO ghi danh ở tỉnh nào?", options: ["Thanh Hóa", "Nghệ An", "Huế", "Ninh Bình"], a: 0 },
-            { q: "Hồ Quý Ly thực hiện biện pháp gì để đề cao chữ Nôm?", options: ["Dịch sách chữ Hán sang Nôm", "Đưa Nôm vào thi cử", "Bắt buộc dùng Nôm", "Dạy học hoàn toàn bằng Nôm"], a: 0 },
-            { q: "Đến nửa sau thế kỷ XIX, các nước Đông Dương là thuộc địa của:", options: ["Anh", "Pháp", "Hà Lan", "Mỹ"], a: 1 },
-            { q: "Quốc gia nào ở ĐNA không bị thành thuộc địa?", options: ["Việt Nam", "Thái Lan", "Lào", "Miến Điện"], a: 1 },
-            { q: "Năm 1945, những quốc gia ĐNA nào tuyên bố độc lập sớm nhất?", options: ["In-đô-nê-xi-a, VN, Lào", "VN, Miến Điện, Thái Lan", "Lào, Campuchia", "Mã Lai, VN"], a: 0 },
-            { q: "Biến đổi quan trọng nhất của các nước ĐNA sau Thế chiến II là gì?", options: ["Được quốc tế coi trọng", "Thành lập ASEAN", "Kinh tế phát triển", "Thành quốc gia độc lập, tự chủ"], a: 3 }
-        ];
+    // BÀI 17
+    { cat: "BÀI 17", q: "Phát biểu nào dưới đây về mảng một chiều là đúng?", options: ["Cấu trúc dữ liệu bao gồm các phần tử có thể thuộc các kiểu dữ liệu khác nhau.", "Cấu trúc dữ liệu tuyến tính bao gồm các phần tử thuộc cùng một kiểu dữ liệu.", "Tập hợp bao gồm các phần tử có thể thuộc các kiểu dữ liệu khác nhau.", "Chuỗi kí tự bao gồm các phần tử có cùng kiểu dữ liệu."], a: 1 },
+    { cat: "BÀI 17", q: "Phần tử nào dưới đây là phần tử cuối cùng trong mảng a có n phần tử?", options: ["a[1]", "a[-1]", "a[0]", "a[n]"], a: 1 },
+    { cat: "BÀI 17", q: "Phần tử a[-4] trong mảng a có 4 phần tử là:", options: ["a[0]", "a[-1]", "a[1]", "Không có phần tử a[-4]"], a: 0 },
+    { cat: "BÀI 17", q: "Phần tử a[-5] trong mảng a có 4 phần tử là:", options: ["a[1]", "a[-1]", "a[0]", "Không có phần tử a[-5]"], a: 3 },
+    { cat: "BÀI 17", q: "Cấu trúc dữ liệu mảng một chiều trong Python được biểu diễn bằng kiểu dữ liệu nào?", options: ["Tuple", "Set", "List", "Dictionary"], a: 2 },
+    { cat: "BÀI 17", q: "Lệnh nào sau đây kiểm tra xem giá trị 7 có tồn tại trong mảng A = [1, 3, 5, 7, 9]?", options: ["7 in A", "A.has(7)", "A.contains(7)", "A.search(7)"], a: 0 },
+    { cat: "BÀI 17", q: "Để thêm một phần tử vào cuối danh sách trong Python, ta dùng lệnh nào?", options: ["append()", "insert()", "extend()", "pop()"], a: 0 },
+    { cat: "BÀI 17", q: "Mảng hai chiều là gì?", options: ["Một chuỗi các phần tử cùng kiểu dữ liệu", "Một danh sách chứa các danh sách con", "Một bảng với dữ liệu không có cấu trúc", "Một danh sách các giá trị ngẫu nhiên"], a: 1 },
+    { cat: "BÀI 17", q: "Lệnh nào sau đây được dùng để truy cập phần tử tại hàng 2 cột 3 của ma trận A?", options: ["A[1][2]", "A[2][3]", "A[3][2]", "A[0][1]"], a: 0 },
+    { cat: "BÀI 17", q: "Trong Python, ta có thể duyệt qua từng phần tử của mảng hai chiều bằng lệnh nào?", options: ["Một lệnh for đơn", "Hai lệnh for lồng nhau", "Hàm map()", "Lệnh while"], a: 1 },
+    { cat: "BÀI 17", q: "Để tính tổng các phần tử của một danh sách trong Python, ta sử dụng hàm nào?", options: ["sum()", "max()", "min()", "avg()"], a: 0 },
+    { cat: "BÀI 17", q: "Cho danh sách A = [1, 2, 3, 4, 5]. Kết quả của lệnh print(A[-1]) là gì?", options: ["1", "3", "5", "Lỗi"], a: 2 },
+    { cat: "BÀI 17", q: "Mảng hai chiều trong Python có thể được biểu diễn bằng cách nào?", options: ["Dictionary chứa danh sách", "List chứa list", "Tuple chứa set", "List đơn thuần"], a: 1 },
+    { cat: "BÀI 17", q: "Lệnh nào sau đây dùng để xoá một phần tử trong danh sách tại vị trí cụ thể?", options: ["list.remove(index)", "list.delete(index)", "list.clear(index)", "list.pop(index)"], a: 3 },
+    { cat: "BÀI 17", q: "Phần tử nào dưới đây là phần tử đầu tiên trong mảng a có n phần tử?", options: ["a[1]", "a[-1]", "a[0]", "a[n]"], a: 2 },
 
-        const trueFalseQuestions = [
-            // CHƯƠNG V: CẢI CÁCH
-            { 
-                passage: "“Về văn hoá, tư tưởng, cải cách của Hồ Quý Ly thể hiện tinh thần phát huy văn hoá dân tộc, đề cao chữ Quốc ngữ (chữ Nôm), đồng thời bài bác tư tưởng các thánh hiền Trung Quốc mà gần như toàn thế giới nho sĩ bấy giờ vẫn coi là bất khả xâm phạm. Về giáo dục, nội dung cải cách thể hiện tinh thần yêu nước, tính đại chúng và gắn bó với cuộc sống”.",
-                q: "Dựa vào tư liệu trên, hãy xác định tính Đúng/Sai của các ý sau:",
-                options: [
-                    "a) Đoạn trích đề cập đến cải cách của Hồ Quý Ly trên tất cả mọi lĩnh vực.",
-                    "b) Cải cách về văn hoá, tư tưởng của Hồ Quý Ly thể hiện nhiều điểm tích cực, tiến bộ.",
-                    "c) Về chữ viết, Hồ Quý Ly đề cao và khuyến khích sử dụng chữ Hán, đồng thời vẫn cho phép người dân được sử dụng chữ Nôm.",
-                    "d) Một trong những ưu điểm trong cải cách của Hồ Quý Ly là nội dung giáo dục thể hiện tinh thần yêu nước, mang tính quần chúng sâu sắc."
-                ],
-                answers: [false, true, false, true] 
-            },
-            {
-                passage: "“Năm 1397, tháng 6, xuống chiếu hạn chế danh điền (ruộng tư). Đại vương và trưởng công chúa thì số ruộng không hạn chế; đến thứ dân thì số ruộng là 10 mẫu. Người nào có nhiều nếu có tội, thì cho tùy ý được lấy ruộng để chuộc tội... Số ruộng thừa phải hiến cho nhà nước.”",
-                q: "Về chính sách Hạn điền của Hồ Quý Ly:",
-                options: [
-                    "a) Chính sách hạn điền của Hồ Quý Ly đã hạn chế sự phát triển của chế độ tư hữu ruộng đất.",
-                    "b) Chính sách hạn điền được áp dụng với tất cả mọi đối tượng trong xã hội, kể cả Đại vương.",
-                    "c) Chính sách hạn điền chắc chắn sẽ vấp phải sự chống cự của quý tộc Trần và một bộ phận nông dân có ruộng tư.",
-                    "d) Với chính sách hạn điền, tùy theo chức vụ và cấp bậc, số lượng ruộng đất sở hữu của tư nhân sẽ ít dần đi."
-                ],
-                answers: [true, false, true, true]
-            },
-            {
-                passage: "“Năm 1402, “Định lại các lệ thuế và tô ruộng. Triều trước mỗi mẫu thu 3 thăng thóc, nay thu 5 thăng. Bãi dâu triều trước thu mỗi mẫu 9 quan hoặc 7 quan tiền, nay thu hạng thượng đẳng mỗi mẫu 5 quan tiền giấy... Đinh nam không có ruộng và trẻ mồ côi, đàn bà góa, thì dẫu có ruộng cũng thôi không thu”",
-                q: "Về chính sách Thuế khóa:",
-                options: [
-                    "a) Trong cải cách của mình, Hồ Quý Ly đã cho điều chỉnh thuế khóa, tăng thuế ruộng, hạ thuế bãi dâu.",
-                    "b) Nội dung cải cách trên đã hạn chế đáng kể sở hữu ruộng đất quy mô lớn của tư nhân.",
-                    "c) Thể lệ thu thuế trong cải cách của Hồ Quý Ly được chia theo các hạng đất chứ không cào bằng như trước.",
-                    "d) Chính sách thu thuế của Hồ Quý Ly thể hiện sự nhân đạo và tiến bộ với một số đối tượng đặc biệt khó khăn."
-                ],
-                answers: [true, false, true, true]
-            },
-            // ĐÔNG NAM Á
-            {
-                passage: "“Điểm chung của chính sách thống trị thực dân ở ĐNA là khai thác, vơ vét và bào rút các quốc gia trong khu vực bằng thuế khóa, cướp ruộng đất lập đồn điền, bóc lột sức người, khai thác tài nguyên... cao su, cà phê, chè, lúa gạo là những sản vật đặc trưng của ĐNA được thực dân phương Tây chú ý khai thác từ sớm”.",
-                q: "Về chính sách cai trị thực dân:",
-                options: [
-                    "a) Đoạn trích cung cấp thông tin về chính sách khai thác, bóc lột của thực dân phương Tây với khu vực Đông Nam Á.",
-                    "b) Trong công nghiệp, thực dân phương Tây tìm cách vơ vét, bào rút thông qua việc cướp ruộng đất lập đồn điền.",
-                    "c) Những sản vật được coi là thế mạnh của các nước ĐNA được thực dân phương Tây chú ý đầu tư khai thác sớm.",
-                    "d) Khai thác tài nguyên thiên nhiên không phải là điểm chung trong chính sách cai trị của thực dân phương Tây ở ĐNA."
-                ],
-                answers: [true, false, true, false]
-            },
-            {
-                passage: "“Kể từ khi thành lập đến nay, tuy gặp nhiều khó khăn... tổ chức ASEAN đã tồn tại và phát triển với nhiều triển vọng tốt đẹp... ngày nay ASEAN đã trở thành một tổ chức có uy tín lớn trên thế giới”.",
-                q: "Về tổ chức ASEAN:",
-                options: [
-                    "a) ASEAN là tổ chức hợp tác ở khu vực Đông Nam Á ra đời sau Chiến tranh lạnh.",
-                    "b) Quá trình phát triển từ ASEAN 5 lên ASEAN 10 gặp nhiều khó khăn và trở ngại.",
-                    "c) Vấn đề Biển Đông là nhân tố duy nhất tạo ra nguy cơ chia rẽ trong quan hệ giữa các nước ASEAN.",
-                    "d) Sau Chiến tranh lạnh, chuyển biến thế giới buộc các nước ASEAN phải chuyển trọng tâm sang hợp tác an ninh, chính trị."
-                ],
-                answers: [false, true, false, false]
-            },
-            {
-                passage: "“Chính sách ngu dân, đầu độc người dân thuộc địa bằng rượu và thuốc phiện là việc làm có ý thức của chính quyền thực dân... Nạn đói – sự dốt nát – bị đầu độc là ba quốc nạn mà người dân dưới chính quyền thuộc địa phải gánh chịu.”",
-                q: "Về chính sách Văn hóa - Xã hội của thực dân:",
-                options: [
-                    "a) Đoạn tư liệu trên thể hiện thực dân phương Tây thi hành chính sách ngu dân để dễ bề cai trị nhân dân Đông Nam Á.",
-                    "b) Về văn hoá - xã hội, chủ nghĩa thực dân phương Tây đặc biệt chú trọng đến chính sách ngu dân.",
-                    "c) Việc áp dụng triệt để chính sách ngu dân có vai trò đặc biệt quan trọng để kìm hãm người dân bản xứ.",
-                    "d) Hiện nay, hầu hết người dân ở các nước ĐNA đều trong tình trạng mù chữ do chính sách cai trị của thực dân để lại."
-                ],
-                answers: [true, true, true, false]
-            },
-            // KHÁNG CHIẾN
-            {
-                passage: "Diễn biến kháng chiến chống Nam Hán và Tống.",
-                q: "Đánh giá các nhận định về kháng chiến chống Nam Hán và Tống:",
-                options: [
-                    "a) Đoạn trích cung cấp thông tin về diễn biến của cuộc kháng chiến chống quân Nam Hán do Ngô Quyền lãnh đạo.",
-                    "b) Các cuộc kháng chiến chống ngoại xâm trong lịch sử dân tộc chỉ được tái hiện qua tác phẩm Đại Việt sử ký toàn thư.",
-                    "c) Hoằng Tháo đã phối hợp chặt chẽ với Ngô Quyền về thủy binh trong cuộc kháng chiến chống quân xâm lược.",
-                    "d) Kế sách cắm cọc dưới lòng sông là kế sách đánh giặc độc đáo, chưa từng có ở giai đoạn trước và sau đó."
-                ],
-                answers: [true, false, false, false]
-            },
-            {
-                passage: "Trận Ngọc Hồi - Đống Đa đại phá quân Thanh.",
-                q: "Đánh giá về chiến thắng Ngọc Hồi - Đống Đa:",
-                options: [
-                    "a) Đoạn trích phản ánh thắng lợi của nghĩa quân Lam Sơn trong cuộc kháng chiến chống quân Thanh.",
-                    "b) Trận Ngọc Hồi, Đống Đa là chiến thắng quân sự tiêu biểu thể hiện tài năng cầm quân của hoàng đế Quang Trung.",
-                    "c) Tôn Sĩ Nghị là một đại thần của nhà Thanh và cũng là một trong những bại tướng dưới tay vua Quang Trung.",
-                    "d) Đoạn trích thể hiện nghệ thuật quân sự hành quân thần tốc, mở ra thời kì đất nước thống nhất từ ải Nam Quan đến mũi Cà Mau."
-                ],
-                answers: [false, true, true, false]
-            }
-        ];
+    // BÀI 18
+    { cat: "BÀI 18", q: "Trong nhiệm vụ 1, làm thế nào để người dùng nhập điểm kiểm tra vào chương trình?", options: ["Sử dụng hàm input() để nhập từng điểm một.", "Sử dụng hàm input() để nhập một chuỗi chứa các điểm, sau đó tách chuỗi.", "Sử dụng vòng lặp for để lần lượt nhập từng điểm.", "Nhập điểm thông qua một file bên ngoài."], a: 1 },
+    { cat: "BÀI 18", q: "Cách nào là đúng để tính tổng các điểm trong danh sách marks trong nhiệm vụ 1?", options: ["Sử dụng sum(marks)", "Sử dụng vòng lặp for để cộng dồn", "Sử dụng hàm reduce", "Sử dụng sum(marks) hoặc dùng vòng lặp for"], a: 3 },
+    { cat: "BÀI 18", q: "Để tìm điểm thấp nhất và cao nhất trong nhiệm vụ 1, ta dùng phương pháp nào?", options: ["Sử dụng các hàm min() và max().", "Duyệt qua danh sách và so sánh từng điểm.", "Sắp xếp danh sách và lấy phần tử đầu và cuối.", "Dùng thuật toán tìm kiếm nhị phân."], a: 0 },
+    { cat: "BÀI 18", q: "Trong nhiệm vụ 2, để lưu trữ điểm kiểm tra của tất cả học sinh, ta dùng cấu trúc gì?", options: ["Mảng một chiều", "Mảng hai chiều", "Bộ từ điển", "Chuỗi"], a: 1 },
+    { cat: "BÀI 18", q: "Trong nhiệm vụ 2, làm thế nào để tính điểm trung bình kiểm tra của từng học sinh?", options: ["Sử dụng hàm mean()", "Tính tổng điểm rồi chia cho số đầu điểm", "Sử dụng vòng lặp cộng dồn rồi chia", "B và C đều đúng"], a: 3 },
+    { cat: "BÀI 18", q: "Để tìm tên học sinh có điểm trung bình cao nhất, chương trình thực hiện gì?", options: ["Dùng hàm max()", "Duyệt danh sách và lưu lại chỉ số của học sinh có điểm cao nhất.", "Sắp xếp danh sách giảm dần.", "Tìm học sinh có tên xuất hiện cuối cùng."], a: 1 },
+    { cat: "BÀI 18", q: "Để tra cứu điểm kiểm tra cụ thể của một học sinh dựa trên số thứ tự, ta dùng:", options: ["Duyệt qua tất cả học sinh", "Truy cập trực tiếp phần tử thứ n trong hàng tương ứng của mảng hai chiều", "In ra tất cả điểm", "Cả A và B đều đúng"], a: 3 },
+    { cat: "BÀI 18", q: "Để tra cứu điểm thứ n của một học sinh trong mảng một chiều, ta nên:", options: ["Dùng hàm marks[n] trực tiếp", "Kiểm tra giá trị n có hợp lệ không trước khi truy cập", "Duyệt toàn bộ mảng", "Tra cứu điểm đầu và cuối"], a: 1 },
+    { cat: "BÀI 18", q: "Chương trình làm gì nếu phát hiện n vượt quá số lượng đầu điểm?", options: ["Hiển thị thông báo lỗi và yêu cầu nhập lại n.", "Lấy phần tử đầu tiên.", "Lấy phần tử cuối cùng.", "Thêm đầu điểm mới."], a: 0 },
+    { cat: "BÀI 18", q: "Câu 10: Thao tác tra cứu điểm cụ thể dựa trên số thứ tự cần:", options: ["Duyệt tìm đúng số thứ tự", "Truy cập trực tiếp A[n]", "In tất cả điểm", "Cả A và B đều đúng"], a: 3 },
+
+    // BÀI 19
+    { cat: "BÀI 19", q: "Tìm kiếm tuần tự tìm số 47 trong dãy [1, 91, 45, 23, 67, 9, 10, 47, 90, 46, 86] cần bao nhiêu lần duyệt?", options: ["4", "6", "8", "7"], a: 2 },
+    { cat: "BÀI 19", q: "Trong tìm kiếm tuần tự, khi nào tìm thấy kết quả nhanh nhất?", options: ["Ở giữa dãy", "Ở cuối dãy", "Không có trong dãy", "Là phần tử đầu tiên"], a: 3 },
+    { cat: "BÀI 19", q: "Trong tìm kiếm tuần tự, khi nào cần nhiều bước nhất?", options: ["Ở giữa danh sách", "Là phần tử cuối cùng", "Không có trong danh sách", "B và C đều đúng"], a: 3 },
+    { cat: "BÀI 19", q: "Tìm kiếm nhị phân yêu cầu danh sách phải sắp xếp thế nào?", options: ["Tăng dần", "Giảm dần", "Không cần sắp xếp", "Tăng hoặc Giảm dần"], a: 3 },
+    { cat: "BÀI 19", q: "Tìm số 34 trong dãy [0, 4, 9, 10, 12, 14, 17, 18, 20, 31, 34, 67] bằng nhị phân cần bao nhiêu lần?", options: ["2", "3", "4", "5"], a: 1 },
+    { cat: "BÀI 19", q: "Tìm số 34 trong dãy trên bằng tuần tự cần bao nhiêu phần tử?", options: ["6", "10", "12", "11"], a: 1 },
+    { cat: "BÀI 19", q: "Ưu điểm của nhị phân so với tuần tự là:", options: ["Dễ lập trình hơn", "Áp dụng cho mọi danh sách", "Tốc độ nhanh hơn khi danh sách đã sắp xếp", "Không cần sắp xếp trước"], a: 2 },
+    { cat: "BÀI 19", q: "Tìm K=9 trong [1, 3, 4, 7, 8, 9, 10] bằng nhị phân trả về chỉ số nào?", options: ["3", "4", "5", "6"], a: 2 },
+    { cat: "BÀI 19", q: "Tìm kiếm tuần tự áp dụng được khi nào?", options: ["Dữ liệu đã sắp xếp", "Dữ liệu chưa được sắp xếp", "Chỉ cho dãy số", "Cả A và B"], a: 3 },
+    { cat: "BÀI 19", q: "Nếu dãy sắp xếp giảm dần, thuật toán nhị phân sẽ:", options: ["Hoạt động bình thường", "Phải thay đổi so sánh ngược lại", "Không thể áp dụng", "Chỉ dùng cho dãy ngắn"], a: 1 },
+    { cat: "BÀI 19", q: "Bộ kiểm thử (test-suite) nào phát hiện nhiều lỗi nhất cho nhị phân?", options: ["a=[1,3,7], k=1; a=[2,3,4,5], k=4", "a=[], k=1; a=[1,2,3], k=1; a=[1,2,3], k=4", "a=[1,3,4], k=2; a=[1,2], k=2", "a=[], k=1; a=[1,2], k=1"], a: 1 },
+    { cat: "BÀI 19", q: "Nhị phân tìm k=3 trong [1,3,4,5,6,7,9] mất bao nhiêu bước?", options: ["1", "2", "3", "4"], a: 1 },
+    { cat: "BÀI 19", q: "Nhị phân tìm k=2 trong [1,3,4,5,6,7,9] mất bao nhiêu bước?", options: ["1", "2", "3", "4"], a: 2 },
+    { cat: "BÀI 19", q: "Nhị phân tìm k=3 trong [1,3,4,5,6,7,9] sẽ so sánh với những số nào?", options: ["5, 3", "1, 3", "5, 4, 3", "5, 1, 3"], a: 0 },
+    { cat: "BÀI 19", q: "Nhị phân tìm k=20 trong [1,3,4,5,6,7,9] sẽ so sánh với số nào?", options: ["6, 7, 9", "5, 6, 7", "5, 6, 7, 9", "5, 7, 9"], a: 3 },
+    { cat: "BÀI 19", q: "Nhị phân dãy [1,3,6,6,6,6,7,9] tìm k=6 sẽ thấy tại:", options: ["a[2]", "a[3]", "a[4]", "a[5]"], a: 1 },
+
+    // BÀI 20
+    { cat: "BÀI 20", q: "Ý tưởng chính của sắp xếp chèn là gì?", options: ["Tìm số nhỏ nhất đưa về đầu.", "Hoán đổi cặp liền kề.", "Chèn từng phần tử vào đúng vị trí mảng con đã sắp xếp.", "Chia mảng đệ quy."], a: 2 },
+    { cat: "BÀI 20", q: "Sắp xếp chèn có bao nhiêu so sánh trong trường hợp tốt nhất?", options: ["0", "n-1", "n(n-1)/2", "n-2"], a: 1 },
+    { cat: "BÀI 20", q: "Trong sắp xếp chọn, điều gì xảy ra mỗi lần lặp?", options: ["Số lớn nhất về cuối.", "Số nhỏ nhất được đưa vào đúng vị trí đầu phần chưa sắp xếp.", "Mỗi phần tử chèn đúng vị trí.", "Hoán đổi liền kề."], a: 1 },
+    { cat: "BÀI 20", q: "Thuật toán nào không sử dụng so sánh?", options: ["Chèn", "Chọn", "Đếm", "Nổi bọt"], a: 2 },
+    { cat: "BÀI 20", q: "Mục đích vòng lặp trong của nổi bọt là gì?", options: ["Tìm số lớn nhất", "Tìm số nhỏ nhất", "So sánh hoán đổi các cặp liền kề", "Chia mảng"], a: 2 },
+    { cat: "BÀI 20", q: "Trường hợp tốt nhất của nổi bọt là:", options: ["Mảng ngược", "Mảng đã sắp xếp", "Mảng giống nhau", "Mảng 2 số"], a: 1 },
+    { cat: "BÀI 20", q: "Cách xác định vị trí chèn trong sắp xếp chèn?", options: ["Tìm số ở giữa", "Dịch chuyển phần tử lớn hơn sang phải", "Hoán đổi liên tục", "Chia đệ quy"], a: 1 },
+    { cat: "BÀI 20", q: "Thuật toán nào phù hợp nhất cho số lượng hàng trong kho tăng dần?", options: ["Nổi bọt", "Chọn", "Chèn", "Nhanh"], a: 2 },
+    { cat: "BÀI 20", q: "Vì sao phải dịch chuyển phần tử lớn hơn lên 1 vị trí trong sắp xếp chèn?", options: ["Tìm vị trí chính xác", "Giảm so sánh", "Giảm trao đổi", "Tăng tốc độ"], a: 0 },
+    { cat: "BÀI 20", q: "Trong sắp xếp chọn, biến Max dùng để làm gì?", options: ["Lưu số nhỏ nhất", "Lưu chỉ số phần tử lớn nhất", "Lưu chỉ số phần tử nhỏ nhất", "Chỉ số cuối"], a: 1 },
+    { cat: "BÀI 20", q: "Sắp xếp nổi bọt dùng khi nào?", options: ["Lượng lớn dữ liệu", "Danh sách nhỏ/trung bình", "Không cần hiệu suất cao", "Đã sắp xếp rồi"], a: 1 },
+    { cat: "BÀI 20", q: "Phát biểu đúng về thuật toán chèn?", options: ["Đưa số lớn nhất về đầu", "Dịch chuyển số lớn hơn sang phải để tạo chỗ trống", "Hoán đổi đầu cuối", "Sắp xếp ngẫu nhiên"], a: 1 },
+    { cat: "BÀI 20", q: "Bước đầu tiên của sắp xếp chèn là gì?", options: ["Tạo biến mới", "Duyệt từ phần tử thứ hai đến cuối", "Sắp xếp giảm dần", "Tạo danh sách mới"], a: 1 },
+    { cat: "BÀI 20", q: "Sau khi chèn 1 phần tử vào vị trí đúng, ta khẳng định được gì?", options: ["Dãy hoàn toàn sắp xếp", "Phần tử từ A[0] đến A[i] đã sắp xếp", "Từ A[i] đến cuối đã sắp xếp", "Chỉ A[i] được sắp xếp"], a: 1 },
+    { cat: "BÀI 20", q: "Lệnh thiết lập biến value lưu A[i] trong sắp xếp chèn?", options: ["value = A[i]", "value = A[j+1]", "A[i] = value", "A[j+1] = value"], a: 0 },
+    { cat: "BÀI 20", q: "Sau mã: a=[1,2,3]; b=a; a=[4,5,6]. Kết quả?", options: ["a=[4,5,6], b=[4,5,6]", "a=[4,5,6], b=[1,2,3]", "a=[1,2,3], b=[4,5,6]", "a=[1,2,3], b=[1,2,3]"], a: 1 },
+    { cat: "BÀI 20", q: "Đoạn mã đúng cho Sắp xếp Nổi bọt tăng dần?", options: ["if a[j]>a[j+1]: a[j],a[j+1]=a[j+1],a[j]", "if a[j]<a[j+1]: a[j]=a[j+1]", "if a[j]>a[j+1]: a[j],a[j-1]=a[j-1],a[j]", "if a[j]<a[j+1]: a[j],a[j-1]=a[j-1],a[j]"], a: 0 },
+    { cat: "BÀI 20", q: "Cho [4,1,6,3,2,9,7,5]. Sắp xếp Chèn sau 3 bước lặp là:", options: ["a=[1,4,6,3,2,9,7,5]", "a=[1,2,6,3,4,9,7,5]", "a=[1,3,4,6,2,9,7,5]", "a=[1,2,2,3,6,9,7,5]"], a: 2 },
+    { cat: "BÀI 20", q: "Cho [4,1,6,3,2,9,7,5]. Sắp xếp Chọn sau 3 bước lặp là:", options: ["a=[1,4,6,3,2,9,7,5]", "a=[1,2,3,6,4,9,7,5]", "a=[1,2,3,4,6,9,7,5]", "a=[1,2,3,4,5,6,7,9]"], a: 1 },
+    { cat: "BÀI 20", q: "Cho [4,1,6,3,2,9,7,5]. Sắp xếp Nổi bọt sau 3 bước lặp là:", options: ["a=[1,2,3,4,5,6,7,9]", "a=[1,2,3,4,5,7,6,9]", "a=[1,2,3,4,6,9,7,5]", "a=[1,4,3,2,6,7,5,9]"], a: 3 },
+    { cat: "BÀI 20", q: "Cho [4,6,9,3,7,1,2,5]. Sau bao nhiêu bước Sắp xếp Chèn thì ra [3,4,6,7,9,1,2,5]?", options: ["1", "2", "3", "4"], a: 2 }
+];
+
+const trueFalseQuestions = [
+    { 
+        cat: "BÀI 17 & 18",
+        passage: "Đếm số học sinh cao hơn chiều cao trung bình.",
+        q: "Xác định tính Đúng/Sai:",
+        options: [
+            "a) Tính trung bình rồi so sánh từng phần tử.",
+            "b) Lặp tìm trung bình và cao nhất là đủ.",
+            "c) Tạo mảng mới chứa các bạn cao hơn trung bình rồi tính tổng.",
+            "d) Dùng hàm min() để tìm người cao hơn trung bình."
+        ],
+        answers: [true, false, false, false] 
+    },
+    {
+        cat: "BÀI 17",
+        passage: "Tính điểm trung bình từng học sinh trong mảng 2 chiều (hàng: học sinh, cột: môn).",
+        q: "Các phương pháp sau Đúng hay Sai:",
+        options: [
+            "a) Duyệt hàng, tính tổng hàng chia số cột.",
+            "b) Duyệt cột, tính tổng cột chia số hàng.",
+            "c) Dùng sum() hàng chia tổng số học sinh.",
+            "d) Dùng max() hàng chia số môn học."
+        ],
+        answers: [true, false, false, false]
+    },
+    {
+        cat: "BÀI 17",
+        passage: "In tất cả phần tử mảng a.",
+        q: "Các đoạn mã sau Đúng hay Sai:",
+        options: [
+            "a) for i in range(1, len(a)): print(a[i])",
+            "b) for i in a: print(i)",
+            "c) for i in range(len(a)): print(a[i])",
+            "d) for i in range(0, len(a)): print(a[i])"
+        ],
+        answers: [false, true, true, true]
+    },
+    {
+        cat: "BÀI 18",
+        passage: "Quản lý điểm kiểm tra học sinh.",
+        q: "Chức năng nào sau đây là yêu cầu đề bài:",
+        options: [
+            "a) In tổng điểm kiểm tra.",
+            "b) Tìm điểm thấp nhất và cao nhất.",
+            "c) Tính điểm trung bình.",
+            "d) Tìm số lần xuất hiện điểm cao nhất."
+        ],
+        answers: [true, true, true, true]
+    },
+    {
+        cat: "BÀI 18",
+        passage: "Quản lý điểm cả lớp bằng mảng hai chiều.",
+        q: "Các chức năng sau Đúng hay Sai:",
+        options: [
+            "a) In danh sách điểm trung bình mỗi học sinh.",
+            "b) Tìm học sinh có điểm trung bình thấp nhất.",
+            "c) In tên học sinh cao điểm nhất bài kiểm tra.",
+            "d) Tính tổng số điểm kiểm tra toàn lớp."
+        ],
+        answers: [true, true, true, true]
+    },
+    {
+        cat: "BÀI 18",
+        passage: "Đoạn mã của Minh: a=[7,2,5,1,4]; b=a[1]; c=a[:3]; d=a[3:]",
+        q: "Nhận xét nào sau đây là Đúng:",
+        options: [
+            "a) Biến b có giá trị 7.",
+            "b) Biến c là [7,2,5].",
+            "c) Biến d là [1,4].",
+            "d) Không có phần tử a[-1]."
+        ],
+        answers: [false, true, true, false]
+    },
+    {
+        cat: "BÀI 19",
+        passage: "Tìm hoa hồng trên Internet.",
+        q: "Xác định miền dữ liệu:",
+        options: [
+            "a) Tất cả tệp văn bản trên máy.",
+            "b) Tất cả hình ảnh trên Internet.",
+            "c) Bài viết cách trồng hoa.",
+            "d) Danh sách học sinh."
+        ],
+        answers: [false, true, false, false]
+    },
+    {
+        cat: "BÀI 19",
+        passage: "Khi nào tìm kiếm tuần tự thấy ngay kết quả?",
+        q: "Xác định Đúng/Sai:",
+        options: [
+            "a) Phần tử ở vị trí đầu tiên.",
+            "b) Phần tử ở vị trí giữa.",
+            "c) Dãy lớn hơn 10 phần tử.",
+            "d) Phần tử ở vị trí cuối cùng."
+        ],
+        answers: [true, false, false, false]
+    },
+    {
+        cat: "BÀI 20",
+        passage: "Phát biểu về Sắp xếp Chọn (Selection Sort).",
+        q: "Đúng hay Sai:",
+        options: [
+            "a) Chọn số nhỏ nhất đưa về đầu dãy.",
+            "b) Hoán đổi rất nhiều lần mỗi vòng lặp.",
+            "c) Sau vòng 1, số nhỏ nhất toàn dãy ở đầu.",
+            "d) Luôn so sánh từng số với tất cả số còn lại."
+        ],
+        answers: [true, false, true, true]
+    },
+    {
+        cat: "BÀI 20",
+        passage: "Lựa chọn thuật toán Sắp xếp Chọn.",
+        q: "Nhận định sau Đúng hay Sai:",
+        options: [
+            "a) Số lần hoán đổi có thể ít hơn Bubble Sort.",
+            "b) Độ phức tạp tốt nhất là O(n).",
+            "c) Số lần so sánh giống nhau dù đã sắp xếp hay chưa.",
+            "d) Sau vòng i, i phần tử đầu đã đúng vị trí."
+        ],
+        answers: [true, false, true, true]
+    }
+];
 
         let currentMode = 'abcd';
         let currentIndex = 0;
         let activeQuestions = abcdQuestions;
-        let currentTFAnswers = []; // To track sub-answers in TF mode
+        let currentTFAnswers = [];
 
         function switchMode(mode) {
             currentMode = mode;
             currentIndex = 0;
-            
             document.getElementById('tab-abcd').classList.toggle('tab-active', mode === 'abcd');
             document.getElementById('tab-tf').classList.toggle('tab-active', mode === 'truefalse');
-            
             activeQuestions = (mode === 'abcd') ? abcdQuestions : trueFalseQuestions;
-            
             document.getElementById('quiz-content').classList.remove('hidden');
             document.getElementById('quiz-footer').classList.remove('hidden');
             document.getElementById('result-screen').classList.add('hidden');
@@ -247,6 +299,7 @@
             const progress = (currentIndex / activeQuestions.length) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
             
+            document.getElementById('q-category').innerText = q.cat;
             document.getElementById('q-counter').innerText = `Câu ${currentIndex + 1} / ${activeQuestions.length}`;
             document.getElementById('q-text').innerText = q.q;
             
@@ -270,22 +323,15 @@
                     btn.onclick = () => selectOptionABCD(btn, idx, q.a);
                     grid.appendChild(btn);
                 } else {
-                    // True/False layout per option
                     const container = document.createElement('div');
                     container.className = 'p-4 border border-slate-200 rounded-xl bg-slate-50 mb-3';
-                    
                     const text = document.createElement('p');
                     text.className = 'font-medium text-slate-700 mb-3';
                     text.innerText = opt;
-                    
                     const btnGroup = document.createElement('div');
                     btnGroup.className = 'flex gap-2';
-                    
-                    const btnTrue = createTFBtn('Đúng', idx, true, q.answers[idx]);
-                    const btnFalse = createTFBtn('Sai', idx, false, q.answers[idx]);
-                    
-                    btnGroup.appendChild(btnTrue);
-                    btnGroup.appendChild(btnFalse);
+                    btnGroup.appendChild(createTFBtn('Đúng', idx, true, q.answers[idx]));
+                    btnGroup.appendChild(createTFBtn('Sai', idx, false, q.answers[idx]));
                     container.appendChild(text);
                     container.appendChild(btnGroup);
                     grid.appendChild(container);
@@ -304,18 +350,13 @@
                 const parent = btn.parentElement;
                 const btns = parent.querySelectorAll('button');
                 btns.forEach(b => b.disabled = true);
-                
                 const isCorrect = (isTrueBtn === actualCorrect);
                 if (isCorrect) {
                     btn.classList.add('correct');
-                    btn.classList.replace('border-slate-200', 'border-green-500');
                 } else {
                     btn.classList.add('wrong');
-                    btn.classList.replace('border-slate-200', 'border-red-500');
-                    // Show correct one
                     btns[actualCorrect ? 0 : 1].classList.add('correct');
                 }
-                
                 currentTFAnswers[optIdx] = isCorrect;
                 checkTFComplete();
             };
@@ -326,7 +367,7 @@
             if (currentTFAnswers.every(val => val !== null)) {
                 document.getElementById('next-btn').classList.remove('hidden');
                 const correctCount = currentTFAnswers.filter(v => v === true).length;
-                document.getElementById('feedback-text').innerText = `Xong! Đúng ${correctCount}/${currentTFAnswers.length} ý.`;
+                document.getElementById('feedback-text').innerText = `Kết quả: Đúng ${correctCount}/${currentTFAnswers.length} ý.`;
                 document.getElementById('feedback-text').className = 'font-bold text-lg text-blue-600';
             }
         }
@@ -334,7 +375,6 @@
         function selectOptionABCD(btn, selectedIdx, correctIdx) {
             const allBtns = document.querySelectorAll('.option-btn');
             allBtns.forEach(b => b.disabled = true);
-
             if (selectedIdx === correctIdx) {
                 btn.classList.add('correct');
                 document.getElementById('feedback-text').innerText = 'Chính xác! ✨';
@@ -342,7 +382,7 @@
             } else {
                 btn.classList.add('wrong');
                 allBtns[correctIdx].classList.add('correct');
-                document.getElementById('feedback-text').innerText = 'Chưa đúng rồi!';
+                document.getElementById('feedback-text').innerText = 'Sai rồi!';
                 document.getElementById('feedback-text').className = 'font-bold text-lg text-red-600';
             }
             document.getElementById('next-btn').classList.remove('hidden');
